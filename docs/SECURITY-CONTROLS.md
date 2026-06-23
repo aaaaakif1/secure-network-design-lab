@@ -22,13 +22,26 @@ The reference configurations include:
 
 - Descriptive hostnames
 - `enable secret`
-- Local login controls
+- Local administrator accounts
+- SSH version 2 instead of Telnet
+- RSA-key generation instructions
 - SSH-only VTY access
 - MOTD warning banner
 - Disabled DNS lookup
 - Shutdown of unused switch ports
+- Management VLAN interfaces on the switches
 
-Credentials are redacted in the public files.
+SSH provides encrypted remote command-line access. Local usernames authenticate administrators, RSA keys protect the session and the VTY lines accept SSH only.
+
+The Layer 2 switches use their site IT VLANs for management:
+
+- UK switch: VLAN 20, `10.0.2.2`
+- India switch: VLAN 21, `10.0.5.2`
+- USA switch: VLAN 22, `10.0.8.2`
+
+A dedicated management VLAN would be preferable in a larger or production network.
+
+All credentials remain redacted in the public repository. The SSH commands are reference templates and are not claimed as tested Packet Tracer evidence.
 
 ## Firewall and VPN Recommendation
 

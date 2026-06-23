@@ -11,12 +11,27 @@ service password-encryption
 enable secret <REDACTED>
 banner motd # Authorised access only #
 
+! SSH reference setup. Generate the RSA key after setting the hostname and domain:
+! crypto key generate rsa modulus 2048
+ip domain-name acme.local
+username networkadmin privilege 15 secret <REDACTED>
+ip ssh version 2
+ip ssh time-out 60
+ip ssh authentication-retries 3
+
 vlan 12
  name HR
 vlan 22
  name IT
 vlan 32
  name FINANCE
+
+interface vlan 22
+ description Switch management interface
+ ip address 10.0.8.2 255.255.255.0
+ no shutdown
+
+ip default-gateway 10.0.8.1
 
 interface GigabitEthernet0/1
  description Trunk to router
@@ -51,3 +66,8 @@ interface FastEthernet0/3
 interface range FastEthernet0/4-24
  description Unused ports
  shutdown
+
+line vty 0 4
+ login local
+ transport input ssh
+ exec-timeout 5 0

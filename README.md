@@ -4,6 +4,8 @@ A cleaned and internally consistent reconstruction of a university networking pr
 
 The network connects three ACME Corporation offices in the UK, India and USA. Each site separates HR, IT and Finance with VLANs, uses router-on-a-stick for inter-VLAN routing, exchanges routes through RIPv2 and applies basic switch and device security.
 
+Technical concepts are followed by plain-English explanations so beginners and readers outside networking can understand the design decisions.
+
 > **Evidence note:** the diagrams and terminal-style images in this repository were generated from the corrected design. They are explanatory portfolio assets, not authentic Cisco Packet Tracer screenshots. Real captures can replace them after the `.pkt` file is recreated or uploaded.
 
 ## Project Summary
@@ -12,7 +14,7 @@ The network connects three ACME Corporation offices in the UK, India and USA. Ea
 
 The design uses a `10.0.0.0/20` private IPv4 block divided into nine `/24` departmental subnets. Two `/30` networks connect the routers. Departmental VLANs create separate Layer 2 broadcast domains, and router subinterfaces provide the default gateways. RIPv2 advertises the site networks across the WAN.
 
-### Simple explanation
+### Plain-English explanation
 
 Each country has its own office network. HR, IT and Finance are placed into separate sections so their traffic stays organised. Routers connect the offices and share directions so computers in different countries can communicate.
 
@@ -20,13 +22,14 @@ Each country has its own office network. HR, IT and Finance are placed into sepa
 
 ## Main Features
 
-| Feature | Technical explanation | Simple explanation |
+| Feature | Technical explanation | Plain-English explanation |
 |---|---|---|
 | FLSM subnetting | Equal `/24` subnets are allocated from `10.0.0.0/20`; `/30` networks are used for WAN links. | The address space is divided into predictable blocks for each department and small links between routers. |
 | VLANs | Each department is placed into its own Layer 2 broadcast domain. | HR, IT and Finance are separated even though they share a physical switch. |
 | Router-on-a-stick | 802.1Q subinterfaces route between VLANs over one trunk link. | One router connection acts as a controlled doorway between departments. |
 | RIPv2 | Routers exchange reachable network information and install remote routes. | Routers share directions to the other offices. |
 | Port security | Sticky MAC learning and violation modes restrict unauthorised devices. | A switch port can remember the approved device and block an unexpected one. |
+| SSH remote management | SSH version 2, local authentication and RSA keys provide encrypted remote command-line access. | Administrators can manage network devices remotely without sending passwords and commands as readable text. |
 | ICMP testing | Ping and route inspection verify end-to-end Layer 3 reachability. | Test messages confirm that devices can reach each other. |
 | Device hardening | Hostnames, secrets, SSH-only management and shutdown of unused ports reduce exposure. | Basic security settings make devices safer and easier to administer. |
 
@@ -83,11 +86,12 @@ secure-network-design-lab/
 
 ## Documentation
 
-- [Technical and simple explanations](docs/TECHNICAL-WALKTHROUGH.md)
+- [Technical and plain-English explanations](docs/TECHNICAL-WALKTHROUGH.md)
 - [Addressing and VLAN plan](docs/ADDRESSING-AND-VLANS.md)
 - [Routing and testing](docs/ROUTING-AND-TESTING.md)
 - [Security controls](docs/SECURITY-CONTROLS.md)
 - [Corrections made from the original report](docs/RECONSTRUCTION-NOTES.md)
+- [Full PDF case study](docs/ACME-Network-Portfolio-Case-Study.pdf)
 - [Roadmap](ROADMAP.md)
 
 ## Skills Demonstrated
@@ -97,6 +101,7 @@ secure-network-design-lab/
 - Router-on-a-stick
 - Dynamic routing with RIPv2
 - Cisco IOS configuration
+- SSH remote management
 - Switch port security
 - Connectivity testing
 - Troubleshooting
