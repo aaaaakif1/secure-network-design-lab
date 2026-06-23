@@ -1,0 +1,53 @@
+!
+! ACME Corporation portfolio reconstruction
+! Reference configuration based on the corrected 10.0.0.0/20 design.
+! Verify interface names and commands in the actual Packet Tracer device model.
+! Replace all redacted secrets before lab use. Never publish real credentials.
+!
+
+hostname IN-SW1
+no ip domain-lookup
+service password-encryption
+enable secret <REDACTED>
+banner motd # Authorised access only #
+
+vlan 11
+ name HR
+vlan 21
+ name IT
+vlan 31
+ name FINANCE
+
+interface GigabitEthernet0/1
+ description Trunk to router
+ switchport mode trunk
+ no shutdown
+
+interface FastEthernet0/1
+ description HR endpoint
+ switchport mode access
+ switchport access vlan 11
+ spanning-tree portfast
+ switchport port-security
+ switchport port-security maximum 1
+ switchport port-security mac-address sticky
+ switchport port-security violation restrict
+ no shutdown
+
+interface FastEthernet0/2
+ description IT endpoint
+ switchport mode access
+ switchport access vlan 21
+ spanning-tree portfast
+ no shutdown
+
+interface FastEthernet0/3
+ description FINANCE endpoint
+ switchport mode access
+ switchport access vlan 31
+ spanning-tree portfast
+ no shutdown
+
+interface range FastEthernet0/4-24
+ description Unused ports
+ shutdown

@@ -1,0 +1,47 @@
+!
+! ACME Corporation portfolio reconstruction
+! Reference configuration based on the corrected 10.0.0.0/20 design.
+! Verify interface names and commands in the actual Packet Tracer device model.
+! Replace all redacted secrets before lab use. Never publish real credentials.
+!
+
+hostname UK-R1
+no ip domain-lookup
+service password-encryption
+enable secret <REDACTED>
+banner motd # Authorised access only #
+
+interface GigabitEthernet0/0
+ no ip address
+ no shutdown
+
+interface GigabitEthernet0/0.10
+ encapsulation dot1Q 10
+ ip address 10.0.1.1 255.255.255.0
+
+interface GigabitEthernet0/0.20
+ encapsulation dot1Q 20
+ ip address 10.0.2.1 255.255.255.0
+
+interface GigabitEthernet0/0.30
+ encapsulation dot1Q 30
+ ip address 10.0.3.1 255.255.255.0
+
+interface Serial0/0/0
+ description WAN to India
+ ip address 172.16.0.1 255.255.255.252
+ no shutdown
+
+router rip
+ version 2
+ no auto-summary
+ network 10.0.0.0
+ network 172.16.0.0
+
+line console 0
+ login local
+ logging synchronous
+
+line vty 0 4
+ login local
+ transport input ssh
