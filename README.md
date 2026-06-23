@@ -55,7 +55,6 @@ WAN links:
 secure-network-design-lab/
 ├── README.md
 ├── ROADMAP.md
-├── CODEX-PROMPT.md
 ├── assets/
 │   ├── diagrams/
 │   └── illustrative-outputs/
